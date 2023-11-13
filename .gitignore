@@ -46,3 +46,4 @@ sdist/
 share/python-wheels/
 var/
 wheels/
+.gitconfig
