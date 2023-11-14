@@ -1,7 +1,16 @@
 # Original code from https://github.com/nevilleomangi/dbml-to-sqlalchemy
 """
 Parses a DBML file to output SQLAlchemy models
+"""
+import os
+import re
+from pathlib import Path
+from textwrap import dedent, indent
+from dataclasses import dataclass
+from argparse import ArgumentParser
+from pydbml import PyDBML
 
+"""
 TODO:
 - modify architecture
 - table refs
@@ -18,13 +27,6 @@ N.B:
 - skips default: NULL
 - skips autoincrement — lets SQLAlchemy handle...
 """
-import os
-import re
-from pathlib import Path
-from textwrap import dedent, indent
-from dataclasses import dataclass
-from argparse import ArgumentParser
-from pydbml import PyDBML
 
 def snake_to_pascal(string):
     """Convert snake_case to PascaleCase for mapped class identifiers"""
