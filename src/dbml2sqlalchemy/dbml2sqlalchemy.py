@@ -1,32 +1,31 @@
 # Original code from https://github.com/nevilleomangi/dbml-to-sqlalchemy
 """
-Parses a DBML file to output SQLAlchemy models
+Parses a DBML file to output SQLAlchemy models\n
 """
+
+# TODO:
+# - modify architecture
+# - table refs
+# - enums
+# - indexes: functional indexes, index constraints
+# - constraints: composite fk
+# - default: functional value
+# - references: 1-1, inline references
+# - cascade
+
+# N.B:
+# - use snake_case for table names
+# - removed nullable = True from assoc tables
+# - skips default: NULL
+# - skips autoincrement — lets SQLAlchemy handle...
+
 import os
 import re
 from pathlib import Path
 from textwrap import dedent, indent
 from dataclasses import dataclass
-from argparse import ArgumentParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 from pydbml import PyDBML
-
-"""
-TODO:
-- modify architecture
-- table refs
-- enums
-- indexes: functional indexes, index constraints
-- constraints: composite fk
-- default: functional value
-- references: 1-1, inline references
-- cascade
-
-N.B: 
-- use snake_case for table names
-- removed nullable = True from assoc tables
-- skips default: NULL
-- skips autoincrement — lets SQLAlchemy handle...
-"""
 
 def snake_to_pascal(string):
     """Convert snake_case to PascaleCase for mapped class identifiers"""
@@ -417,7 +416,8 @@ OUTPUT = "out/models.txt"
 
 
 def main():
-    parser = ArgumentParser(description=__doc__)
+    # parser = ArgumentParser(description=__doc__)
+    parser = ArgumentParser(description=__doc__, formatter_class=RawDescriptionHelpFormatter)
 
     parser.add_argument(
         "-i",
